@@ -44,6 +44,22 @@ namespace WindowsFormsApp1
                     txtYear.Text = tagFile.Tag.Year.ToString();
                     txtGenre.Text = tagFile.Tag.FirstGenre;
 
+                    //Copied from : https://stackoverflow.com/a/35103554
+                    var mStream = new MemoryStream();
+                    var firstPicture = tagFile.Tag.Pictures.FirstOrDefault();
+                    pbMusicCoverPicture.Visible = false;
+                    if (firstPicture != null)
+                    {
+                        byte[] pData = firstPicture.Data.Data;
+                        mStream.Write(pData, 0, Convert.ToInt32(pData.Length));
+                        var bm = new Bitmap(mStream, false);
+                        mStream.Dispose();
+                        pbMusicCoverPicture.Image = bm;
+                        pbMusicCoverPicture.SizeMode = PictureBoxSizeMode.StretchImage; //Copied from https://stackoverflow.com/a/16822190
+                        pbMusicCoverPicture.Refresh();
+                        pbMusicCoverPicture.Visible = true;
+                    }
+
                     pnlChosenFileInfo.Visible = true;
                 }
             } catch(Exception ex)
@@ -56,32 +72,6 @@ namespace WindowsFormsApp1
         {
             try
             {
-                if (string.IsNullOrEmpty(txtSongTitle.Text))
-                {
-                    MessageBox.Show("Title must be filled", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if (string.IsNullOrEmpty(txtAlbumArtist.Text))
-                {
-                    MessageBox.Show("Artist must be filled", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if (string.IsNullOrEmpty(txtGenre.Text))
-                {
-                    MessageBox.Show("Genre must be filled", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if (string.IsNullOrEmpty(txtAlbumName.Text))
-                {
-                    MessageBox.Show("Album Name must be filled", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if (string.IsNullOrEmpty(txtYear.Text))
-                {
-                    MessageBox.Show("Year must be filled", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
                 var tagFile = TagLib.File.Create(mainMusicFileName);
                 tagFile.Tag.Title = txtSongTitle.Text.Trim();
                 tagFile.Tag.AlbumArtists = new string[1] { txtAlbumArtist.Text.Trim() };
@@ -140,6 +130,7 @@ namespace WindowsFormsApp1
                 btnChangeCoverPicture.Visible = false;
                 coverMusicFileName = string.Empty;
                 lblCoverPictureFileName.Text = string.Empty;
+                pnlChosenFileInfo.Visible = false;
                 MessageBox.Show("Cover picture of song is successfully changed", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)

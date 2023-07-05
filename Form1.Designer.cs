@@ -32,6 +32,7 @@ namespace WindowsFormsApp1
             this.lblTitleChooseSongFile = new System.Windows.Forms.Label();
             this.btnBrowseSongFile = new System.Windows.Forms.Button();
             this.pnlChosenFileInfo = new System.Windows.Forms.Panel();
+            this.pbMusicCoverPicture = new System.Windows.Forms.PictureBox();
             this.lblCoverPictureFileName = new System.Windows.Forms.Label();
             this.btnBrowseCoverPictureFile = new System.Windows.Forms.Button();
             this.lblTitleChooseCoverPictureFile = new System.Windows.Forms.Label();
@@ -52,7 +53,8 @@ namespace WindowsFormsApp1
             this.label3 = new System.Windows.Forms.Label();
             this.openFileDialog_SongFile = new System.Windows.Forms.OpenFileDialog();
             this.openFileDialog_CoverPicture = new System.Windows.Forms.OpenFileDialog();
-            this.pbMusicCoverPicture = new System.Windows.Forms.PictureBox();
+            this.chkFlagChangeMusicFileName = new System.Windows.Forms.CheckBox();
+            this.txtMusicFileName = new System.Windows.Forms.TextBox();
             this.pnlChosenFileInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMusicCoverPicture)).BeginInit();
             this.SuspendLayout();
@@ -70,16 +72,18 @@ namespace WindowsFormsApp1
             // btnBrowseSongFile
             // 
             this.btnBrowseSongFile.Location = new System.Drawing.Point(237, 21);
-            this.btnBrowseSongFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBrowseSongFile.Margin = new System.Windows.Forms.Padding(4);
             this.btnBrowseSongFile.Name = "btnBrowseSongFile";
             this.btnBrowseSongFile.Size = new System.Drawing.Size(124, 28);
             this.btnBrowseSongFile.TabIndex = 1;
             this.btnBrowseSongFile.Text = "Browse Song";
             this.btnBrowseSongFile.UseVisualStyleBackColor = true;
-            this.btnBrowseSongFile.Click += new System.EventHandler(this.btnChooseFile_Click);
+            this.btnBrowseSongFile.Click += new System.EventHandler(this.btnChooseMainSongFile_Click);
             // 
             // pnlChosenFileInfo
             // 
+            this.pnlChosenFileInfo.Controls.Add(this.txtMusicFileName);
+            this.pnlChosenFileInfo.Controls.Add(this.chkFlagChangeMusicFileName);
             this.pnlChosenFileInfo.Controls.Add(this.pbMusicCoverPicture);
             this.pnlChosenFileInfo.Controls.Add(this.lblCoverPictureFileName);
             this.pnlChosenFileInfo.Controls.Add(this.btnBrowseCoverPictureFile);
@@ -100,11 +104,19 @@ namespace WindowsFormsApp1
             this.pnlChosenFileInfo.Controls.Add(this.lblChosenFileName);
             this.pnlChosenFileInfo.Controls.Add(this.label3);
             this.pnlChosenFileInfo.Location = new System.Drawing.Point(47, 97);
-            this.pnlChosenFileInfo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlChosenFileInfo.Margin = new System.Windows.Forms.Padding(4);
             this.pnlChosenFileInfo.Name = "pnlChosenFileInfo";
             this.pnlChosenFileInfo.Size = new System.Drawing.Size(944, 388);
             this.pnlChosenFileInfo.TabIndex = 2;
             this.pnlChosenFileInfo.Visible = false;
+            // 
+            // pbMusicCoverPicture
+            // 
+            this.pbMusicCoverPicture.Location = new System.Drawing.Point(478, 140);
+            this.pbMusicCoverPicture.Name = "pbMusicCoverPicture";
+            this.pbMusicCoverPicture.Size = new System.Drawing.Size(366, 120);
+            this.pbMusicCoverPicture.TabIndex = 18;
+            this.pbMusicCoverPicture.TabStop = false;
             // 
             // lblCoverPictureFileName
             // 
@@ -119,7 +131,7 @@ namespace WindowsFormsApp1
             // btnBrowseCoverPictureFile
             // 
             this.btnBrowseCoverPictureFile.Location = new System.Drawing.Point(190, 289);
-            this.btnBrowseCoverPictureFile.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnBrowseCoverPictureFile.Margin = new System.Windows.Forms.Padding(4);
             this.btnBrowseCoverPictureFile.Name = "btnBrowseCoverPictureFile";
             this.btnBrowseCoverPictureFile.Size = new System.Drawing.Size(171, 28);
             this.btnBrowseCoverPictureFile.TabIndex = 16;
@@ -152,7 +164,7 @@ namespace WindowsFormsApp1
             // btnChangeCoverPicture
             // 
             this.btnChangeCoverPicture.Location = new System.Drawing.Point(432, 339);
-            this.btnChangeCoverPicture.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnChangeCoverPicture.Margin = new System.Windows.Forms.Padding(4);
             this.btnChangeCoverPicture.Name = "btnChangeCoverPicture";
             this.btnChangeCoverPicture.Size = new System.Drawing.Size(161, 28);
             this.btnChangeCoverPicture.TabIndex = 13;
@@ -164,7 +176,7 @@ namespace WindowsFormsApp1
             // txtGenre
             // 
             this.txtGenre.Location = new System.Drawing.Point(125, 140);
-            this.txtGenre.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtGenre.Margin = new System.Windows.Forms.Padding(4);
             this.txtGenre.Name = "txtGenre";
             this.txtGenre.Size = new System.Drawing.Size(280, 22);
             this.txtGenre.TabIndex = 12;
@@ -182,7 +194,7 @@ namespace WindowsFormsApp1
             // txtYear
             // 
             this.txtYear.Location = new System.Drawing.Point(597, 92);
-            this.txtYear.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtYear.Margin = new System.Windows.Forms.Padding(4);
             this.txtYear.Name = "txtYear";
             this.txtYear.Size = new System.Drawing.Size(132, 22);
             this.txtYear.TabIndex = 10;
@@ -200,7 +212,7 @@ namespace WindowsFormsApp1
             // txtAlbumName
             // 
             this.txtAlbumName.Location = new System.Drawing.Point(597, 49);
-            this.txtAlbumName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtAlbumName.Margin = new System.Windows.Forms.Padding(4);
             this.txtAlbumName.Name = "txtAlbumName";
             this.txtAlbumName.Size = new System.Drawing.Size(279, 22);
             this.txtAlbumName.TabIndex = 8;
@@ -218,7 +230,7 @@ namespace WindowsFormsApp1
             // txtAlbumArtist
             // 
             this.txtAlbumArtist.Location = new System.Drawing.Point(125, 94);
-            this.txtAlbumArtist.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtAlbumArtist.Margin = new System.Windows.Forms.Padding(4);
             this.txtAlbumArtist.Name = "txtAlbumArtist";
             this.txtAlbumArtist.Size = new System.Drawing.Size(280, 22);
             this.txtAlbumArtist.TabIndex = 6;
@@ -246,7 +258,7 @@ namespace WindowsFormsApp1
             // btnChangeSongAttribute
             // 
             this.btnChangeSongAttribute.Location = new System.Drawing.Point(28, 170);
-            this.btnChangeSongAttribute.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnChangeSongAttribute.Margin = new System.Windows.Forms.Padding(4);
             this.btnChangeSongAttribute.Name = "btnChangeSongAttribute";
             this.btnChangeSongAttribute.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.btnChangeSongAttribute.Size = new System.Drawing.Size(135, 28);
@@ -258,7 +270,7 @@ namespace WindowsFormsApp1
             // txtSongTitle
             // 
             this.txtSongTitle.Location = new System.Drawing.Point(125, 46);
-            this.txtSongTitle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSongTitle.Margin = new System.Windows.Forms.Padding(4);
             this.txtSongTitle.Name = "txtSongTitle";
             this.txtSongTitle.Size = new System.Drawing.Size(280, 22);
             this.txtSongTitle.TabIndex = 3;
@@ -299,13 +311,24 @@ namespace WindowsFormsApp1
             this.openFileDialog_CoverPicture.Filter = "Images files|*.jpg|*.jpeg|";
             this.openFileDialog_CoverPicture.RestoreDirectory = true;
             // 
-            // pbMusicCoverPicture
+            // chkFlagChangeMusicFileName
             // 
-            this.pbMusicCoverPicture.Location = new System.Drawing.Point(478, 140);
-            this.pbMusicCoverPicture.Name = "pbMusicCoverPicture";
-            this.pbMusicCoverPicture.Size = new System.Drawing.Size(366, 120);
-            this.pbMusicCoverPicture.TabIndex = 18;
-            this.pbMusicCoverPicture.TabStop = false;
+            this.chkFlagChangeMusicFileName.AutoSize = true;
+            this.chkFlagChangeMusicFileName.Location = new System.Drawing.Point(28, 205);
+            this.chkFlagChangeMusicFileName.Name = "chkFlagChangeMusicFileName";
+            this.chkFlagChangeMusicFileName.Size = new System.Drawing.Size(198, 21);
+            this.chkFlagChangeMusicFileName.TabIndex = 19;
+            this.chkFlagChangeMusicFileName.Text = "Change Music File Name ?";
+            this.chkFlagChangeMusicFileName.UseVisualStyleBackColor = true;
+            this.chkFlagChangeMusicFileName.CheckedChanged += new System.EventHandler(this.chkFlagChangeMusicFileName_CheckedChanged);
+            // 
+            // txtMusicFileName
+            // 
+            this.txtMusicFileName.Enabled = false;
+            this.txtMusicFileName.Location = new System.Drawing.Point(28, 228);
+            this.txtMusicFileName.Name = "txtMusicFileName";
+            this.txtMusicFileName.Size = new System.Drawing.Size(308, 22);
+            this.txtMusicFileName.TabIndex = 20;
             // 
             // Form1
             // 
@@ -315,9 +338,9 @@ namespace WindowsFormsApp1
             this.Controls.Add(this.pnlChosenFileInfo);
             this.Controls.Add(this.btnBrowseSongFile);
             this.Controls.Add(this.lblTitleChooseSongFile);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Music Attributes Editor";
             this.pnlChosenFileInfo.ResumeLayout(false);
             this.pnlChosenFileInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMusicCoverPicture)).EndInit();
@@ -352,6 +375,8 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.Label lblCoverPictureFileName;
         private System.Windows.Forms.OpenFileDialog openFileDialog_CoverPicture;
         private System.Windows.Forms.PictureBox pbMusicCoverPicture;
+        private System.Windows.Forms.CheckBox chkFlagChangeMusicFileName;
+        private System.Windows.Forms.TextBox txtMusicFileName;
     }
 }
 

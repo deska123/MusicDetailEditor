@@ -21,7 +21,7 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
-        private void btnChooseFile_Click(object sender, EventArgs e)
+        private void btnChooseMainSongFile_Click(object sender, EventArgs e)
         {
             try
             {
@@ -33,6 +33,8 @@ namespace WindowsFormsApp1
                         MessageBox.Show(string.Concat("File '", openFileDialog_SongFile.FileName.Trim(), "' is read-only. Please remove read-only attribute."), "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
+
+                    txtMusicFileName.Text = Path.GetFileNameWithoutExtension(openFileDialog_SongFile.FileName.Trim());
 
                     mainMusicFileName = openFileDialog_SongFile.FileName;
                     lblChosenFileName.Text = mainMusicFileName;
@@ -72,6 +74,18 @@ namespace WindowsFormsApp1
         {
             try
             {
+                if(chkFlagChangeMusicFileName.Checked)
+                {
+                    if(string.IsNullOrEmpty(txtMusicFileName.Text))
+                    {
+                        MessageBox.Show("Music file name must be filled !", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                    string newMusicFileName = string.Concat(Path.GetDirectoryName(mainMusicFileName), @"\", txtMusicFileName.Text.Trim(), Path.GetExtension(mainMusicFileName));
+                    File.Move(mainMusicFileName, newMusicFileName);
+                    mainMusicFileName = newMusicFileName;
+                }
+
                 var tagFile = TagLib.File.Create(mainMusicFileName);
                 tagFile.Tag.Title = txtSongTitle.Text.Trim();
                 tagFile.Tag.AlbumArtists = new string[1] { txtAlbumArtist.Text.Trim() };
@@ -136,6 +150,17 @@ namespace WindowsFormsApp1
             catch (Exception ex)
             {
                 MessageBox.Show(string.Concat("Error ", ex.Message.Trim(), " | ", ex.StackTrace.Trim()), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void chkFlagChangeMusicFileName_CheckedChanged(object sender, EventArgs e)
+        {
+            if(chkFlagChangeMusicFileName.Checked)
+            {
+                txtMusicFileName.Enabled = true; 
+            } else
+            {
+                txtMusicFileName.Enabled = false;
             }
         }
     }

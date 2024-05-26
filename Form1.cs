@@ -163,5 +163,10 @@ namespace WindowsFormsApp1
                 txtMusicFileName.Enabled = false;
             }
         }
+
+        private void lblTitleChooseCoverPictureFile_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
